@@ -51,36 +51,25 @@ results
 ```{r}
 
 library(ggmap)
-bigTenTowns <- c("State College, Pennsylvania")
-town_coord <- geocode(bigTenTowns)
 
-library(mapproj)
-map <- get_map(location = 'Illinois', zoom = 6)
+map <- get_map(location = 'Ohio', zoom = 4)
 ggmap(map)
 ```
 
 
 ## 3D-random walks
 
-This is nowhere near the correct solution, I just was interested in how few lines of code are needed. This is a one dimensional walk on the X-axis, right??
 
 
-```{r}
-# from https://stackoverflow.com/questions/21991130/simulating-a-random-walk#21991340
-set.seed(1)
-
-n <- 1000
-x <- cumsum(sample(c(-1, 1), n, TRUE))
-plot(x)
-
-
-```
 
 ```{r}
-#set.seed(1982)
+
+
+
+timesToRun = 10
 
 # set the size of the walk
-walkSize = 10#10^4
+walkSize = 10^5
 
 #create a location vector to store x,y,z values
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
@@ -91,9 +80,19 @@ path <- matrix(NaN, walkSize, 3, byrow=TRUE)
 #add the start point to the path
 path[1,] <- c(location[1],location[2],location[3])
 
-# here we generate the random walk numbers for the six possible moves
-boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers
 
+
+
+# start a loop to run it n times and get n random endpoints
+# create a matrix to store the location endpoints
+endpoints <- matrix(NaN, timesToRun, 3, byrow=TRUE)
+ for(j in 1:timesToRun) {
+
+   
+   
+# here we generate the random walk numbers for the six possible moves
+# set.seed(1982) # uncomment to set seed
+boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers   
 # and we convert those moves to xyz coordinates here:
  for(i in 2:walkSize) { # set this from 2 instead of one because 1 is our starting point
    
@@ -107,12 +106,16 @@ boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow
      
    )
     path[i,] <- c(location[1],location[2],location[3])
- }
-
-
-# and this is to show that everything is working so far:
+ } #end for(i in 2:walkSize) 
 path
-
+# add the endpoint  
+ endpoints[j,] <- c(location[1],location[2],location[3])
+ #reset location to start point
+ location[1] <- 0
+ location[2] <- 0
+ location[3] <- 0
+} # end ten loop
+endpoints
 
 ```
 
