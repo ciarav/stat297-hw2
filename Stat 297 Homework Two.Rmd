@@ -1,5 +1,5 @@
 ---
-title: "STAT 200 Homework 2"
+title: "STAT 297 Homework 2"
 author: "Austin Gongora, Ian Willick, Ciara Virgo, Mark Hancharik"
 date: "October 13, 2017"
 
@@ -48,7 +48,16 @@ results
 
 ## Map
 
+```{r}
 
+library(ggmap)
+bigTenTowns <- c("State College, Pennsylvania")
+town_coord <- geocode(bigTenTowns)
+
+library(mapproj)
+map <- get_map(location = 'Illinois', zoom = 6)
+ggmap(map)
+```
 
 
 ## 3D-random walks
