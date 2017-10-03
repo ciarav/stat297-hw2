@@ -1,0 +1,56 @@
+---
+title: "STAT 200 Homework 2"
+author: "Austin Gongora, Ian Willick, Ciara Virgo, Mark Hancharik"
+date: "October 13, 2017"
+
+output: 
+  html_document:
+    theme: paper    
+    highlight: tango 
+    toc: true
+    toc_depth: 3
+    toc_float: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Fizz Buzz
+
+```{r}
+
+# we don't need this 'u' variable, it just makes it easier to change the length -MH
+u = 100
+
+results <- vector(mode = "character", length = u)
+
+ for(i in 1:u) {
+  x = i
+  
+    if (x %% (3 * 5) == 0){    # shortened from this:  if (x %% 3 == 0 & x %% 5 == 0){
+      results[i] <- "fizz buzz"
+      }else if (x %% 3 == 0){
+      results[i] <- "fizz"
+      }else if (x %% 5 == 0){
+      results[i]  <- "buzz"
+      }else{
+      results[i]  <- i
+    }
+
+ }
+
+results
+
+
+```
+
+## Map
+
+## 3D-random walks
+
+## Construct a portfolio
+
+
+
