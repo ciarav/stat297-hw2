@@ -48,7 +48,66 @@ results
 
 ## Map
 
+
+
+
 ## 3D-random walks
+
+This is nowhere near the correct solution, I just was interested in how few lines of code are needed. This is a one dimensional walk on the X-axis, right??
+
+
+```{r}
+# from https://stackoverflow.com/questions/21991130/simulating-a-random-walk#21991340
+set.seed(1)
+
+n <- 1000
+x <- cumsum(sample(c(-1, 1), n, TRUE))
+plot(x)
+
+
+```
+
+```{r}
+#set.seed(1982)
+
+# set the size of the walk
+walkSize = 10#10^4
+
+#create a location vector to store x,y,z values
+location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
+
+# create a matrix to store the location points
+path <- matrix(NaN, walkSize, 3, byrow=TRUE)
+
+#add the start point to the path
+path[1,] <- c(location[1],location[2],location[3])
+
+# here we generate the random walk numbers for the six possible moves
+boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers
+
+# and we convert those moves to xyz coordinates here:
+ for(i in 2:walkSize) { # set this from 2 instead of one because 1 is our starting point
+   
+   switch(boxOfNumbers[i],
+       location[1] <- location[1] + 1,
+       location[1] <- location[1] - 1,
+       location[2] <- location[2] + 1,
+       location[2] <- location[2] - 1,
+       location[3] <- location[3] + 1,
+       location[3] <- location[3] - 1
+     
+   )
+    path[i,] <- c(location[1],location[2],location[3])
+ }
+
+
+# and this is to show that everything is working so far:
+path
+
+
+```
+
+
 
 ## Construct a portfolio
 
