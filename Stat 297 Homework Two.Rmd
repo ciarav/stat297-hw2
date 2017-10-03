@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Fizz Buzz
 
-```{r}
+```{r,  echo=FALSE}
 
 # we don't need this 'u' variable, it just makes it easier to change the length -MH
 u = 100
@@ -48,12 +48,16 @@ results
 
 ## Map
 
-```{r}
+```{r,  echo=FALSE}
+
 
 library(ggmap)
 
-map <- get_map(location = 'Ohio', zoom = 4)
+
+map <- get_map(location = 'Ohio', zoom = 5)
 ggmap(map)
+
+
 ```
 
 
@@ -62,14 +66,14 @@ ggmap(map)
 
 
 
-```{r}
+```{r,  echo=FALSE}
 
 
 
 timesToRun = 10
 
 # set the size of the walk
-walkSize = 10^5
+walkSize = 10^1
 
 #create a location vector to store x,y,z values
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
@@ -117,9 +121,33 @@ path
 } # end ten loop
 endpoints
 
+
+
+ 
+
 ```
 
+```{r,  echo=FALSE}
+library(plot3D)
+ x <- y <- seq(-10, 10, length = 30)
+     z <- outer(x, y, FUN = function(x,y) x^2 + y^2)
+     persp3D(x, y, z, theta = 30, phi = 30,
+             col = "lightblue", ltheta = 120, shade = 0.75,
+             ticktype = "detailed", xlab = "X",
+             ylab = "Y", zlab = "x^2+y^2" )
+    # Points where to put the arrows
+     x <- y <- seq(-10, 10, len = 6)
+     X0 <- outer(x, y, FUN = function (x,y) x)
+     Y0 <- outer(x, y, FUN = function (x,y) y)
+     Z0 <- outer(x, y, FUN = function (x,y) x^2 + y^2)
+     X1 <- X0 + 1
+     Y1 <- Y0 + 1
+     Z1 <- Z0 + 10
+ 
+     segments3D(X0, Y0, Z0, X0, Y0, rep(0, length(X0)), lwd = 2,
+             add = TRUE, col = "green")
 
+```
 
 ## Construct a portfolio
 
