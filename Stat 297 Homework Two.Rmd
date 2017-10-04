@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r,  echo=FALSE}
 
 # we don't need this 'u' variable, it just makes it easier to change the length -MH
-u = 100
+u = 1000
 
 results <- vector(mode = "character", length = u)
 
@@ -70,10 +70,10 @@ ggmap(map)
 
 
 
-timesToRun = 10
+timesToRun = 1
 
 # set the size of the walk
-walkSize = 10^1
+walkSize = 10^5
 
 #create a location vector to store x,y,z values
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
@@ -95,8 +95,30 @@ endpoints <- matrix(NaN, timesToRun, 3, byrow=TRUE)
    
    
 # here we generate the random walk numbers for the six possible moves
-# set.seed(1982) # uncomment to set seed
-boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers   
+set.seed(1982) # uncomment to set seed
+#boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers  
+   # instead of generating ints, generate a double between 0-1 and convert to an int
+boxOfNumbers <- vector(mode = "integer", length = walkSize)  
+
+
+for(i in 1:walkSize){
+  currentNumber <- runif(1)
+  if(currentNumber <= (1/6)){
+    boxOfNumbers[i] <- 1
+  }else if(currentNumber <= (2/6)){
+    boxOfNumbers[i] <- 2
+  }else if(currentNumber <= (3/6)){
+    boxOfNumbers[i] <- 3
+  }else if(currentNumber <= (4/6)){
+    boxOfNumbers[i] <- 4
+  }else if(currentNumber <= (5/6)){
+    boxOfNumbers[i] <- 5
+  }else{
+    boxOfNumbers[i] <- 6
+  }
+
+}   
+   
 # and we convert those moves to xyz coordinates here:
  for(i in 2:walkSize) { # set this from 2 instead of one because 1 is our starting point
    
