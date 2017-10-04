@@ -53,6 +53,10 @@ results
 
 library(ggmap)
 
+bigten_location <- c("Columbus, Ohio", "East Lansing, Michigan", "Stat College, Pennslyvania","Ann Harbor, Michigan", "Lincoln, Nebraska","Madison, Wisconsin", "Iowa City, Iowa","Bloomington, Indiana", "Urbana, Illinois","College Park, Maryland", "Minneapolis, Minnesota","Chicago, Illinois", "West Lafayette, Indiana","Rutgers, New Jersey")
+bigten_coord <- geocode(birth_place)
+
+
 
 map <- get_map(location = 'Ohio', zoom = 5)
 ggmap(map)
