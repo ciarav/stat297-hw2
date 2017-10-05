@@ -52,12 +52,13 @@ I haven't found the template that was used in the homework yet, it gives you jus
 ```{r,  echo=FALSE}
 
 
-#library(ggmap)
+library(ggmap)
 
-bigten_location <- c("Columbus, Ohio", "East Lansing, Michigan", "Stat College, Pennslyvania","Ann Harbor, Michigan", "Lincoln, Nebraska","Madison, Wisconsin", "Iowa City, Iowa","Bloomington, Indiana", "Urbana, Illinois","College Park, Maryland", "Minneapolis, Minnesota","Chicago, Illinois", "West Lafayette, Indiana","Rutgers, New Jersey")
-bigten_coord <- geocode(birth_place)
+bigten_location <- c("Columbus, Ohio", "East Lansing, Michigan", "State College, Pennslyvania","Ann Arbor, Michigan", "Lincoln, Nebraska","Madison, Wisconsin", "Iowa City, Iowa","Bloomington, Indiana", "Urbana, Illinois","College Park, Maryland", "Minneapolis, Minnesota","Chicago, Illinois", "West Lafayette, Indiana","Rutgers, New Jersey")
+bigten_coord <- geocode(bigten_location)
 
-
+# it seems like when I run this, random coordinates are "NA"
+bigten_coord
 
 #map <- get_map(location = 'Ohio', zoom = 6)
 #ggmap(map)
@@ -66,13 +67,49 @@ bigten_coord <- geocode(birth_place)
 ```
 
 
+This is from the homework, it gives us the win percentages and conference sections as well as the coordinates:
+```{r, echo=FALSE}
+
+
+library(maps)
+library(ggmap)
+library(rvest)
+
+# Define webpage
+big10 = read_html("http://www.bigten.org/library/stats/fb-confsked.html#standings")
+
+# Get uni names
+big10 %>% 
+    html_nodes(".b1gfbstats:nth-child(9) td:nth-child(1) , .b1gfbstats:nth-child(6) td:nth-child(1)") %>% 
+    html_text() -> uni_name
+uni_name = paste(uni_name,"University")
+
+# Find uni locations
+uni_coord = data.frame(geocode(uni_name))
+
+# Get win rate
+big10 %>% 
+    html_nodes("td:nth-child(7)") %>%
+    html_text() -> uni_wp
+uni_coord$wp = 100*as.numeric(uni_wp[1:length(uni_name)])
+
+# Get division
+uni_coord$conf = rep(c("East Division","West Division"), each = length(uni_name)/2)
+
+
+# it seems like when I run this, random coordinates are "NA"
+uni_coord
+```
+
+
+
+
+
+
+
 ## 3D-random walks
 
-Right now, this is showing the end point of the random walk. I believe the values we need to be showing are [ 26, -44, 26 ].
-
-Also, the numbers at the bottom should match the expected values (seeded values)
-
-
+a = (1/6), B = 10^4, seed = 1982:
 ```{r,  echo=FALSE}
 
 
@@ -142,20 +179,24 @@ for(i in 1:walkSize){
      
    )
     path[i,] <- c(location[1],location[2],location[3])
- } #end for(i in 2:walkSize) 
-#path
+ } #end for(i in 1:walkSize) 
+
 # add the endpoint  
  endpoints[j,] <- c(location[1],location[2],location[3])
- #reset location to start point
+ #reset origin to [0,0,0]
  location[1] <- 0
  location[2] <- 0
  location[3] <- 0
 } # end ten loop
-endpoints
-head(Ut)
-print("0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699 <-- expected value")
 
+# https://stackoverflow.com/questions/77434/how-to-access-the-last-value-in-a-vector#83222
+tail(path, n=1)
 
+# print some things out to see if it's working...
+#endpoints
+
+#head(Ut)
+#print("0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699 <-- expected value")
 #boxOfNumbers
 #path
 
@@ -164,6 +205,91 @@ print("0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699 <-- expected 
 
 ```
 
+
+a = (.99)(1/6), B = 10^5, seed = 2000:
+```{r, echo=FALSE}
+
+
+timesToRun = 1
+
+# set the size of the walk
+walkSize = 10^5
+
+#create a location vector to store x,y,z values
+location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
+
+# create a matrix to store the location points
+path <- matrix(NaN, walkSize, 3, byrow=TRUE)
+
+#add the start point to the path
+path[1,] <- c(location[1],location[2],location[3])
+
+
+
+
+# start a loop to run it n times and get n random endpoints
+# create a matrix to store the location endpoints
+endpoints <- matrix(NaN, timesToRun, 3, byrow=TRUE)
+ for(j in 1:timesToRun) {
+
+   
+   
+# here we generate the random walk numbers for the six possible moves
+B <- walkSize
+set.seed(2000)
+Ut <- runif(B)
+
+#boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers  
+   # instead of generating ints, generate a double between 0-1 and convert to an int
+boxOfNumbers <- vector(mode = "integer", length = walkSize)  
+
+
+for(i in 1:walkSize){
+  currentNumber <- Ut[i] #runif(1)
+  if(currentNumber <= ((1/6)*.99)){
+    boxOfNumbers[i] <- 1
+  }else if(currentNumber <= ((2/6)*.99)){
+    boxOfNumbers[i] <- 2
+  }else if(currentNumber <= ((3/6)*.99)){
+    boxOfNumbers[i] <- 3
+  }else if(currentNumber <= ((4/6)*.99)){
+    boxOfNumbers[i] <- 4
+  }else if(currentNumber <= ((5/6)*.99)){
+    boxOfNumbers[i] <- 5
+  }else{
+    boxOfNumbers[i] <- 6
+  }
+
+}  
+   
+# and we convert those moves to xyz coordinates here:
+ for(i in 1:walkSize) { # set this from 2 instead of one because 1 is our starting point
+   
+   switch(boxOfNumbers[i],
+       location[1] <- location[1] + 1,
+       location[1] <- location[1] - 1,
+       location[2] <- location[2] + 1,
+       location[2] <- location[2] - 1,
+       location[3] <- location[3] + 1,
+       location[3] <- location[3] - 1
+     
+   )
+    path[i,] <- c(location[1],location[2],location[3])
+ } #end for(i in 1:walkSize) 
+
+# add the endpoint  
+ endpoints[j,] <- c(location[1],location[2],location[3])
+ #reset origin to [0,0,0]
+ location[1] <- 0
+ location[2] <- 0
+ location[3] <- 0
+} # end ten loop
+#endpoints
+# https://stackoverflow.com/questions/77434/how-to-access-the-last-value-in-a-vector#83222
+tail(path, n=1)
+# print out the expected value
+#print("[142, -133, -899]")
+```
 
 
 ## Construct a portfolio

@@ -233,15 +233,82 @@ div.tocify {
 <div id="map" class="section level2">
 <h2>Map</h2>
 <p>I haven’t found the template that was used in the homework yet, it gives you just the outline of the states</p>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Columbus,%20Ohio&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=East%20Lansing,%20Michigan&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=State%20College,%20Pennslyvania&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Ann%20Arbor,%20Michigan&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Lincoln,%20Nebraska&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Madison,%20Wisconsin&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Iowa%20City,%20Iowa&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Bloomington,%20Indiana&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Urbana,%20Illinois&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=College%20Park,%20Maryland&amp;sensor=false</code></pre>
+<pre><code>## .Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Minneapolis,%20Minnesota&amp;sensor=false
+## .Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Chicago,%20Illinois&amp;sensor=false
+## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=West%20Lafayette,%20Indiana&amp;sensor=false
+## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Rutgers,%20New%20Jersey&amp;sensor=false</code></pre>
+<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Rutgers,
+## New Jersey&quot;</code></pre>
+<pre><code>##          lon      lat
+## 1  -82.99879 39.96118
+## 2  -84.48387 42.73698
+## 3  -77.86000 40.79339
+## 4  -83.74304 42.28083
+## 5  -96.68520 40.82576
+## 6  -89.40123 43.07305
+## 7  -91.53017 41.66113
+## 8  -86.52639 39.16533
+## 9  -88.20727 40.11059
+## 10 -76.93776 38.98970
+## 11 -93.26501 44.97775
+## 12 -87.62980 41.87811
+## 13 -86.90807 40.42587
+## 14        NA       NA</code></pre>
+<p>This is from the homework, it gives us the win percentages and conference sections as well as the coordinates:</p>
+<pre><code>## Loading required package: xml2</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Ohio%20State%20University&amp;sensor=false</code></pre>
+<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Ohio
+## State University&quot;</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Penn%20State%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Michigan%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Maryland%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Michigan%20State%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Rutgers%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Indiana%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Nebraska%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Wisconsin%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Minnesota%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Purdue%20University&amp;sensor=false</code></pre>
+<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Purdue
+## University&quot;</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Illinois%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Northwestern%20University&amp;sensor=false</code></pre>
+<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Iowa%20University&amp;sensor=false</code></pre>
+<pre><code>##          lon      lat  wp          conf
+## 1         NA       NA  80 East Division
+## 2  -77.85991 40.79821 100 East Division
+## 3  -83.73822 42.27804 100 East Division
+## 4  -76.94255 38.98692  75 East Division
+## 5  -84.48217 42.70185  75 East Division
+## 6  -74.44680 40.49820  20 East Division
+## 7  -86.51306 39.17613  50 East Division
+## 8  -96.70048 40.82020  60 West Division
+## 9  -89.41249 43.07659 100 West Division
+## 10 -93.22773 44.97399  75 West Division
+## 11        NA       NA  50 West Division
+## 12 -88.22716 40.10195  50 West Division
+## 13 -87.67527 42.05646  50 West Division
+## 14 -91.55490 41.66270  60 West Division</code></pre>
 </div>
 <div id="d-random-walks" class="section level2">
 <h2>3D-random walks</h2>
-<p>Right now, this is showing the end point of the random walk. I believe the values we need to be showing are [ 26, -44, 26 ].</p>
-<p>Also, the numbers at the bottom should match the expected values (seeded values)</p>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]   26  -44   26</code></pre>
-<pre><code>## [1] 0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699</code></pre>
-<pre><code>## [1] &quot;0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699 &lt;-- expected value&quot;</code></pre>
+<p>a = (1/6), B = 10^4, seed = 1982:</p>
+<pre><code>##          [,1] [,2] [,3]
+## [10000,]   26  -44   26</code></pre>
+<p>a = (.99)(1/6), B = 10^5, seed = 2000:</p>
+<pre><code>##           [,1] [,2] [,3]
+## [100000,]  142 -133 -899</code></pre>
 </div>
 <div id="construct-a-portfolio" class="section level2">
 <h2>Construct a portfolio</h2>
