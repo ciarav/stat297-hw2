@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r,  echo=FALSE}
 
 # we don't need this 'u' variable, it just makes it easier to change the length -MH
-u = 1000
+u = 10^2
 
 results <- vector(mode = "character", length = u)
 
@@ -48,18 +48,19 @@ results
 
 ## Map
 
+I haven't found the template that was used in the homework yet, it gives you just the outline of the states
 ```{r,  echo=FALSE}
 
 
-library(ggmap)
+#library(ggmap)
 
 bigten_location <- c("Columbus, Ohio", "East Lansing, Michigan", "Stat College, Pennslyvania","Ann Harbor, Michigan", "Lincoln, Nebraska","Madison, Wisconsin", "Iowa City, Iowa","Bloomington, Indiana", "Urbana, Illinois","College Park, Maryland", "Minneapolis, Minnesota","Chicago, Illinois", "West Lafayette, Indiana","Rutgers, New Jersey")
 bigten_coord <- geocode(birth_place)
 
 
 
-map <- get_map(location = 'Ohio', zoom = 5)
-ggmap(map)
+#map <- get_map(location = 'Ohio', zoom = 6)
+#ggmap(map)
 
 
 ```
@@ -67,7 +68,9 @@ ggmap(map)
 
 ## 3D-random walks
 
+Right now, this is showing the end point of the random walk. I believe the values we need to be showing are [ 26, -44, 26 ].
 
+Also, the numbers at the bottom should match the expected values (seeded values)
 
 
 ```{r,  echo=FALSE}
@@ -77,7 +80,7 @@ ggmap(map)
 timesToRun = 1
 
 # set the size of the walk
-walkSize = 10^5
+walkSize = 10^4
 
 #create a location vector to store x,y,z values
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
@@ -99,14 +102,17 @@ endpoints <- matrix(NaN, timesToRun, 3, byrow=TRUE)
    
    
 # here we generate the random walk numbers for the six possible moves
-set.seed(1982) # uncomment to set seed
+B <- walkSize
+set.seed(1982)
+Ut <- runif(B)
+
 #boxOfNumbers <- c(sample(1:6, walkSize, replace=TRUE)) # replace = TRUE to allow for repeat numbers  
-   # instead of generating ints, generate a double between 0-1 and convert to an int
+# instead of generating ints, generate a double between 0-1 and convert to an int
 boxOfNumbers <- vector(mode = "integer", length = walkSize)  
 
 
 for(i in 1:walkSize){
-  currentNumber <- runif(1)
+  currentNumber <- Ut[i] #runif(1)
   if(currentNumber <= (1/6)){
     boxOfNumbers[i] <- 1
   }else if(currentNumber <= (2/6)){
@@ -124,7 +130,7 @@ for(i in 1:walkSize){
 }   
    
 # and we convert those moves to xyz coordinates here:
- for(i in 2:walkSize) { # set this from 2 instead of one because 1 is our starting point
+ for(i in 1:walkSize) { # set this from 2 instead of one because 1 is our starting point
    
    switch(boxOfNumbers[i],
        location[1] <- location[1] + 1,
@@ -137,7 +143,7 @@ for(i in 1:walkSize){
    )
     path[i,] <- c(location[1],location[2],location[3])
  } #end for(i in 2:walkSize) 
-path
+#path
 # add the endpoint  
  endpoints[j,] <- c(location[1],location[2],location[3])
  #reset location to start point
@@ -146,34 +152,19 @@ path
  location[3] <- 0
 } # end ten loop
 endpoints
+head(Ut)
+print("0.7533571 0.6056869 0.4977858 0.6473441 0.2183902 0.4594699 <-- expected value")
 
+
+#boxOfNumbers
+#path
 
 
  
 
 ```
 
-```{r,  echo=FALSE}
-library(plot3D)
- x <- y <- seq(-10, 10, length = 30)
-     z <- outer(x, y, FUN = function(x,y) x^2 + y^2)
-     persp3D(x, y, z, theta = 30, phi = 30,
-             col = "lightblue", ltheta = 120, shade = 0.75,
-             ticktype = "detailed", xlab = "X",
-             ylab = "Y", zlab = "x^2+y^2" )
-    # Points where to put the arrows
-     x <- y <- seq(-10, 10, len = 6)
-     X0 <- outer(x, y, FUN = function (x,y) x)
-     Y0 <- outer(x, y, FUN = function (x,y) y)
-     Z0 <- outer(x, y, FUN = function (x,y) x^2 + y^2)
-     X1 <- X0 + 1
-     Y1 <- Y0 + 1
-     Z1 <- Z0 + 10
- 
-     segments3D(X0, Y0, Z0, X0, Y0, rep(0, length(X0)), lwd = 2,
-             add = TRUE, col = "green")
 
-```
 
 ## Construct a portfolio
 
