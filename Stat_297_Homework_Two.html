@@ -207,99 +207,23 @@ div.tocify {
 </div>
 
 
-<div id="fizz-buzz" class="section level2">
-<h2>Fizz Buzz</h2>
-<pre><code>##   [1] &quot;1&quot;         &quot;2&quot;         &quot;fizz&quot;      &quot;4&quot;         &quot;buzz&quot;     
-##   [6] &quot;fizz&quot;      &quot;7&quot;         &quot;8&quot;         &quot;fizz&quot;      &quot;buzz&quot;     
-##  [11] &quot;11&quot;        &quot;fizz&quot;      &quot;13&quot;        &quot;14&quot;        &quot;fizz buzz&quot;
-##  [16] &quot;16&quot;        &quot;17&quot;        &quot;fizz&quot;      &quot;19&quot;        &quot;buzz&quot;     
-##  [21] &quot;fizz&quot;      &quot;22&quot;        &quot;23&quot;        &quot;fizz&quot;      &quot;buzz&quot;     
-##  [26] &quot;26&quot;        &quot;fizz&quot;      &quot;28&quot;        &quot;29&quot;        &quot;fizz buzz&quot;
-##  [31] &quot;31&quot;        &quot;32&quot;        &quot;fizz&quot;      &quot;34&quot;        &quot;buzz&quot;     
-##  [36] &quot;fizz&quot;      &quot;37&quot;        &quot;38&quot;        &quot;fizz&quot;      &quot;buzz&quot;     
-##  [41] &quot;41&quot;        &quot;fizz&quot;      &quot;43&quot;        &quot;44&quot;        &quot;fizz buzz&quot;
-##  [46] &quot;46&quot;        &quot;47&quot;        &quot;fizz&quot;      &quot;49&quot;        &quot;buzz&quot;     
-##  [51] &quot;fizz&quot;      &quot;52&quot;        &quot;53&quot;        &quot;fizz&quot;      &quot;buzz&quot;     
-##  [56] &quot;56&quot;        &quot;fizz&quot;      &quot;58&quot;        &quot;59&quot;        &quot;fizz buzz&quot;
-##  [61] &quot;61&quot;        &quot;62&quot;        &quot;fizz&quot;      &quot;64&quot;        &quot;buzz&quot;     
-##  [66] &quot;fizz&quot;      &quot;67&quot;        &quot;68&quot;        &quot;fizz&quot;      &quot;buzz&quot;     
-##  [71] &quot;71&quot;        &quot;fizz&quot;      &quot;73&quot;        &quot;74&quot;        &quot;fizz buzz&quot;
-##  [76] &quot;76&quot;        &quot;77&quot;        &quot;fizz&quot;      &quot;79&quot;        &quot;buzz&quot;     
-##  [81] &quot;fizz&quot;      &quot;82&quot;        &quot;83&quot;        &quot;fizz&quot;      &quot;buzz&quot;     
-##  [86] &quot;86&quot;        &quot;fizz&quot;      &quot;88&quot;        &quot;89&quot;        &quot;fizz buzz&quot;
-##  [91] &quot;91&quot;        &quot;92&quot;        &quot;fizz&quot;      &quot;94&quot;        &quot;buzz&quot;     
-##  [96] &quot;fizz&quot;      &quot;97&quot;        &quot;98&quot;        &quot;fizz&quot;      &quot;buzz&quot;</code></pre>
+<div id="fizz-buzz-showing-the-last-15-of-1000" class="section level2">
+<h2>Fizz Buzz (showing the last 15 of 1000)</h2>
+<pre><code>##  [1] &quot;9986&quot;      &quot;fizz&quot;      &quot;9988&quot;      &quot;9989&quot;      &quot;fizz buzz&quot;
+##  [6] &quot;9991&quot;      &quot;9992&quot;      &quot;fizz&quot;      &quot;9994&quot;      &quot;buzz&quot;     
+## [11] &quot;fizz&quot;      &quot;9997&quot;      &quot;9998&quot;      &quot;fizz&quot;      &quot;buzz&quot;</code></pre>
 </div>
 <div id="map" class="section level2">
 <h2>Map</h2>
 <p>I haven’t found the template that was used in the homework yet, it gives you just the outline of the states</p>
-<pre><code>## Loading required package: ggplot2</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Columbus,%20Ohio&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=East%20Lansing,%20Michigan&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=State%20College,%20Pennslyvania&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Ann%20Arbor,%20Michigan&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Lincoln,%20Nebraska&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Madison,%20Wisconsin&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Iowa%20City,%20Iowa&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Bloomington,%20Indiana&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Urbana,%20Illinois&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=College%20Park,%20Maryland&amp;sensor=false</code></pre>
-<pre><code>## .Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Minneapolis,%20Minnesota&amp;sensor=false
-## .Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Chicago,%20Illinois&amp;sensor=false
-## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=West%20Lafayette,%20Indiana&amp;sensor=false
-## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Rutgers,%20New%20Jersey&amp;sensor=false</code></pre>
-<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Rutgers,
-## New Jersey&quot;</code></pre>
-<pre><code>##          lon      lat
-## 1  -82.99879 39.96118
-## 2  -84.48387 42.73698
-## 3  -77.86000 40.79339
-## 4  -83.74304 42.28083
-## 5  -96.68520 40.82576
-## 6  -89.40123 43.07305
-## 7  -91.53017 41.66113
-## 8  -86.52639 39.16533
-## 9  -88.20727 40.11059
-## 10 -76.93776 38.98970
-## 11 -93.26501 44.97775
-## 12 -87.62980 41.87811
-## 13 -86.90807 40.42587
-## 14        NA       NA</code></pre>
 <p>This is from the homework, it gives us the win percentages and conference sections as well as the coordinates:</p>
-<pre><code>## Loading required package: xml2</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Ohio%20State%20University&amp;sensor=false</code></pre>
-<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Ohio
-## State University&quot;</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Penn%20State%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Michigan%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Maryland%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Michigan%20State%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Rutgers%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Indiana%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Nebraska%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Wisconsin%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Minnesota%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Purdue%20University&amp;sensor=false</code></pre>
-<pre><code>## Warning: geocode failed with status OVER_QUERY_LIMIT, location = &quot;Purdue
-## University&quot;</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Illinois%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Northwestern%20University&amp;sensor=false</code></pre>
-<pre><code>## Information from URL : http://maps.googleapis.com/maps/api/geocode/json?address=Iowa%20University&amp;sensor=false</code></pre>
-<pre><code>##          lon      lat  wp          conf
-## 1         NA       NA  80 East Division
-## 2  -77.85991 40.79821 100 East Division
-## 3  -83.73822 42.27804 100 East Division
-## 4  -76.94255 38.98692  75 East Division
-## 5  -84.48217 42.70185  75 East Division
-## 6  -74.44680 40.49820  20 East Division
-## 7  -86.51306 39.17613  50 East Division
-## 8  -96.70048 40.82020  60 West Division
-## 9  -89.41249 43.07659 100 West Division
-## 10 -93.22773 44.97399  75 West Division
-## 11        NA       NA  50 West Division
-## 12 -88.22716 40.10195  50 West Division
-## 13 -87.67527 42.05646  50 West Division
-## 14 -91.55490 41.66270  60 West Division</code></pre>
+<p>library(maps) library(ggmap) library(rvest)</p>
+<p>a# Define webpage big10 = read_html(“<a href="http://www.bigten.org/library/stats/fb-confsked.html#standings" class="uri">http://www.bigten.org/library/stats/fb-confsked.html#standings</a>”)</p>
+<p>a# Get uni names big10 %&gt;% html_nodes(“.b1gfbstats:nth-child(9) td:nth-child(1) , .b1gfbstats:nth-child(6) td:nth-child(1)”) %&gt;% html_text() -&gt; uni_name uni_name = paste(uni_name,“University”)</p>
+<p>a# Find uni locations uni_coord = data.frame(geocode(uni_name))</p>
+<p>a# Get win rate big10 %&gt;% html_nodes(“td:nth-child(7)”) %&gt;% html_text() -&gt; uni_wp uni_coord$wp = 100*as.numeric(uni_wp[1:length(uni_name)])</p>
+<p>a# Get division uni_coord$conf = rep(c(“East Division”,“West Division”), each = length(uni_name)/2)</p>
+<p>a# it seems like when I run this, random coordinates are “NA” uni_coord</p>
 </div>
 <div id="d-random-walks" class="section level2">
 <h2>3D-random walks</h2>
@@ -312,6 +236,7 @@ div.tocify {
 </div>
 <div id="construct-a-portfolio" class="section level2">
 <h2>Construct a portfolio</h2>
+<pre><code>## [1] 499</code></pre>
 </div>
 
 
