@@ -63,6 +63,21 @@ bigten_coord
 #map <- get_map(location = 'Ohio', zoom = 6)
 #ggmap(map)
 
+map <- get_map(location = 'Michigan', zoom = 4)
+ggmap(map) + geom_point(data = uni_coord, 
+             aes(lon, lat, col = big10, size = GS)) + 
+             scale_size(name="Number of wins") + 
+             xlab("Longitude") + ylab("Latitude")
+             
+map <- get_map(location = 'Pennsylvania', zoom = 8)
+ggmap(map)
+
+map <- get_map(location = 'Nebraska', zoom = 4)
+ggmap(map)
+
+map <- get_map(location = 'Wisconsin', zoom = 4)
+ggmap(map)
+
 
 ```
 
