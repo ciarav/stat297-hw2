@@ -23,13 +23,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-(showing the last 45 of 1000)
+
 
 
 
 ```{r,  echo=FALSE}
 
-# we don't need this 'u' variable, it just makes it easier to change the length -MH
 u = 10^4
 
 results <- vector(mode = "character", length = u)
@@ -50,8 +49,9 @@ results <- vector(mode = "character", length = u)
  }
 
 
-
-tail(results, n=45) 
+num <- 45
+cat("showing the last",num,"of",u)
+tail(results, n=num) 
 
 ```
 
@@ -80,7 +80,7 @@ ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3
 
 ## 3D-random walks
 
-
+### a = (1/6), B = 10^4, seed = 1982
 ```{r, echo=FALSE, message=FALSE}
 
 # a = (1/6), B = 10^4, seed = 1982:
@@ -204,7 +204,7 @@ p
 
 ```
 
-
+### a = (.99)(1/6), B = 10^5, seed = 2000
 ```{r, echo=FALSE, message=FALSE}
 # a = (.99)(1/6), B = 10^5, seed = 2000:
 
@@ -310,7 +310,7 @@ p
 
 ## Construct a portfolio
 
-
+### Our advice is to invest in Real Estate.
 
 ```{r, echo=FALSE}
 
