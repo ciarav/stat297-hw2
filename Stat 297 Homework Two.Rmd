@@ -19,7 +19,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-## Fizz Buzz (showing the last 45 of 1000)
+## Fizz Buzz 
+
+
+
+(showing the last 45 of 1000)
 
 
 
@@ -54,60 +58,18 @@ tail(results, n=45)
 ## Map
 
 
+```{r,  echo=FALSE, message=FALSE}
 
-This is from the homework, it gives us the win percentages and conference sections as well as the coordinates. <b>However, as this pic shows, quite often we don't get all of the coordinates. The code has a complete list to use for the lat and lon values </b>
-
-
-<center>
-![ ](NA locations.png)
-</center>
-
-           lon      lat  wp          conf
-  1  -83.03091 40.01419  80 East Division
-  2  -77.85991 40.79821 100 East Division
-  3  -83.73822 42.27804 100 East Division
-  4  -76.94255 38.98692  75 East Division
-  5  -84.48217 42.70185  75 East Division
-  6  -74.44680 40.49820  20 East Division
-  7  -86.51306 39.17613  50 East Division
-  8  -96.70048 40.82020  60 West Division
-  9  -89.41249 43.07659 100 West Division
-  10 -93.22773 44.97399  75 West Division
-  11 -86.92119 40.42371  50 West Division
-  12 -88.22716 40.10195  50 West Division
-  13 -87.67527 42.05646  50 West Division
-  14 -91.55490 41.66270  60 West Division
-
-```{r,  echo=FALSE}
-
-library(maps)
 library(ggmap)
-library(rvest)
-
-# Define webpage
-big10 = read_html("http://www.bigten.org/library/stats/fb-confsked.html#standings")
-
-# Get uni names
-big10 %>% 
-    html_nodes(".b1gfbstats:nth-child(9) td:nth-child(1) , .b1gfbstats:nth-child(6) td:nth-child(1)") %>% 
-    html_text() -> uni_name
-uni_name = paste(uni_name,"University")
-
-# Find uni locations
-uni_coord = data.frame(geocode(uni_name))
-
-# Get win rate
-big10 %>% 
-    html_nodes("td:nth-child(7)") %>%
-    html_text() -> uni_wp
-uni_coord$wp = 100*as.numeric(uni_wp[1:length(uni_name)])
-
-# Get division
-uni_coord$conf = rep(c("East Division","West Division"), each = length(uni_name)/2)
 
 
-# it seems like when I run this, random coordinates are "NA"
-uni_coord
+uni_coord <- read.table("uni_coord.txt")
+
+
+
+central_map <- get_map(location = 'Indiana', zoom = 5, maptype = "terrain")
+ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) +  xlab("Longitude") + ylab("Latitude")
+
 
 ```
 
@@ -118,10 +80,10 @@ uni_coord
 
 ## 3D-random walks
 
-a = (1/6), B = 10^4, seed = 1982:
-```{r,  echo=FALSE}
 
+```{r, echo=FALSE, message=FALSE}
 
+# a = (1/6), B = 10^4, seed = 1982:
 
 timesToRun = 1
 
@@ -132,7 +94,7 @@ walkSize = 10^4
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
 
 # create a matrix to store the location points
-path <- matrix(NaN, walkSize, 3, byrow=TRUE)
+path <- matrix(NaN, walkSize+1, 3, byrow=TRUE)
 colnames(path) <- c("x1","y1","z1")
 
 #add the start point to the path
@@ -188,7 +150,7 @@ for(i in 1:walkSize){
        location[3] <- location[3] - 1
      
    )
-    path[i,] <- c(location[1],location[2],location[3])
+    path[i+1,] <- c(location[1],location[2],location[3])
  } #end for(i in 1:walkSize) 
 
 # add the endpoint  
@@ -199,20 +161,33 @@ for(i in 1:walkSize){
  
  
  #reset origin to [0,0,0]
- location[1] <- 0
- location[2] <- 0
- location[3] <- 0
+ #location[1] <- 0
+ #location[2] <- 0
+ #location[3] <- 0
 } # end ten loop
 
 # https://stackoverflow.com/questions/77434/how-to-access-the-last-value-in-a-vector#83222
-tail(path, n=1)
+#head(path, n=1)
+#tail(path, n=1)
+
+
 #write.table(path, file="path.txt")
 library(plotly)
 
 #data <- read.csv('https://raw.githubusercontent.com/plotly/datasets/master/_3d-line-plot.csv')
 #path <- read.csv("path.csv")
-p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = '#1f77b4', width = 1)) 
+p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = 'black', width = 1), name = 'path') %>%
+  add_markers(x = 0, y = 0, z = 0, marker=list(color="red" , size=10 , opacity=1.0), name = 'start point')%>%
+  add_markers(x = location[1], y = location[2], z = location[3], marker=list(color="blue" , size=10 , opacity=1.0), name = 'end point')  %>%
+  layout(legend = list(x = 100, y = 0.5)) %>% 
+ layout(annotations = 
+ list(x = 1, y = -0.1, text = "a = (1/6), B = 10^4, seed = 1982", 
+      showarrow = F, xref='paper', yref='paper', 
+      xanchor='auto', yanchor='auto', xshift=0, yshift=0,
+      font=list(size=15, color="black"))
+ )
 p
+
 
 
 #write.csv(path, file="path.csv")
@@ -230,9 +205,8 @@ p
 ```
 
 
-a = (.99)(1/6), B = 10^5, seed = 2000:
-```{r, echo=FALSE}
-
+```{r, echo=FALSE, message=FALSE}
+# a = (.99)(1/6), B = 10^5, seed = 2000:
 
 timesToRun = 1
 
@@ -243,7 +217,7 @@ walkSize = 10^5
 location <- c("X Axis" = 0, "Y Axis" = 0, "Z Axis" = 0)
 
 # create a matrix to store the location points
-path <- matrix(NaN, walkSize, 3, byrow=TRUE)
+path <- matrix(NaN, walkSize+1, 3, byrow=TRUE)
 colnames(path) <- c("x1","y1","z1")
 #add the start point to the path
 path[1,] <- c(location[1],location[2],location[3])
@@ -298,22 +272,37 @@ for(i in 1:walkSize){
        location[3] <- location[3] - 1
      
    )
-    path[i,] <- c(location[1],location[2],location[3])
+    path[i+1,] <- c(location[1],location[2],location[3])
  } #end for(i in 1:walkSize) 
 
 # add the endpoint  
  endpoints[j,] <- c(location[1],location[2],location[3])
  #reset origin to [0,0,0]
- location[1] <- 0
- location[2] <- 0
- location[3] <- 0
+# location[1] <- 0
+ #location[2] <- 0
+# location[3] <- 0
 } # end ten loop
 #endpoints
-# https://stackoverflow.com/questions/77434/how-to-access-the-last-value-in-a-vector#83222
-tail(path, n=1)
 
-p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = '#1f77b4', width = 1)) 
+
+# https://stackoverflow.com/questions/77434/how-to-access-the-last-value-in-a-vector#83222
+#head(path, n=1)
+#tail(path, n=1)
+
+
+p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = 'black', width = 1), name = 'path') %>%
+  add_markers(x = 0, y = 0, z = 0, marker=list(color="red" , size=10 , opacity=1.0), name = 'start point')%>%
+  add_markers(x = location[1], y = location[2], z = location[3], marker=list(color="blue" , size=10 , opacity=1.0), name = 'end point')  %>%
+  layout(legend = list(x = 100, y = 0.5)) %>% 
+ layout(annotations = 
+ list(x = 1, y = -0.1, text = "a = (.99)(1/6), B = 10^5, seed = 2000", 
+      showarrow = F, xref='paper', yref='paper', 
+      xanchor='right', yanchor='auto', xshift=0, yshift=0,
+      font=list(size=15, color="black"))
+ )
 p
+#p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = '#1f77b4', width = 1)) 
+#p
 # print out the expected value
 #print("[142, -133, -899]")
 ```
@@ -322,10 +311,6 @@ p
 ## Construct a portfolio
 
 
-I have added three vectors, one with the ticker names, one with the variances, and one with the mean returns. Maybe we should have these in a csv file.
-Actually, runnung the choose(500, 2) on these vectors takes about 60 seconds, so maybe a csv of the final calculation would be better, this is for anybody in the group to use without waiting 10 minutes to get these numbers
-
-![This is what I got, I'm pretty sure this is way wrong ](calculated values.png)
 
 ```{r, echo=FALSE}
 
