@@ -54,21 +54,31 @@ cat("showing the last",num,"of",u)
 tail(results, n=num) 
 
 ```
-
 ## Map
 
 
 ```{r,  echo=FALSE, message=FALSE}
-
+library(maps)
 library(ggmap)
-
+library(ggplot2)
 
 uni_coord <- read.table("uni_coord.txt")
+all_states <- map_data("state")
+#plot all states with ggplot
+p <- ggplot()
+states <- subset(all_states, region %in% c( "illinois", "indiana", "iowa","kansas", 'maryland', "michigan", "minnesota","missouri",'nebraska','new jersey', "pennsylvania", "ohio", "south dakota", "wisconsin",'west virginia') )
+
+p <- ggplot()
+p <- p + geom_polygon( data=states, aes(x=long, y=lat, group = group),colour="black", fill="grey" )
+p
+
+p<- p + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) + xlab("Longitude") + ylab("Latitude")
+p
+
+#central_map <- get_map(location = 'Indiana', zoom = 5, maptype = "toner")
+#ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) +  #xlab("Longitude") + ylab("Latitude")
 
 
-
-central_map <- get_map(location = 'Indiana', zoom = 5, maptype = "terrain")
-ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) +  xlab("Longitude") + ylab("Latitude")
 
 
 ```
@@ -77,13 +87,12 @@ ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3
 
 
 
-
 ## 3D-random walks
 
 ### a = (1/6), B = 10^4, seed = 1982
-```{r, echo=FALSE, message=FALSE}
+``` {r, echo=FALSE, message=FALSE}
 
-# a = (1/6), B = 10^4, seed = 1982:
+#a = (1/6), B = 10^4, seed = 1982:
 
 timesToRun = 1
 
