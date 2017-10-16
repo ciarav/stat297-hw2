@@ -301,6 +301,8 @@ p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d',
       font=list(size=15, color="black"))
  )
 p
+animation_opts(p, frame = 500, transition = 500, easing = "linear",
+               redraw = TRUE, mode = "immediate")
 #p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = '#1f77b4', width = 1)) 
 #p
 # print out the expected value
