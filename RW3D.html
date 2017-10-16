@@ -1,0 +1,54 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="generator" content="R package animation 2.5">
+	<title>Animations Using the R Language</title>
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	<link rel="stylesheet" href="css/scianimator.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/github.min.css">
+
+	<script src="js/jquery-1.4.4.min.js"></script>
+	<script src="js/jquery.scianimator.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/languages/r.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+<body>
+
+	<div class="scianimator"><div id="Rplot" style="display: inline-block;"></div></div>
+	<div class="scianimator" style="width: 480px; text-align: left"><pre><code class="r">## Animations generated in R version 3.4.1 (2017-06-30)
+##   using the package animation
+library(animation)
+library(bindrcpp)
+library(plotly)
+library(mapproj)
+library(rvest)
+library(xml2)
+library(ggmap)
+library(ggplot2)
+library(maps)
+p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, 
+    type = "scatter3d", mode = "lines", line = list(color = "black", 
+        width = 1), name = "path") %>% add_markers(x = 0, 
+    y = 0, z = 0, marker = list(color = "red", size = 10, 
+        opacity = 1), name = "start point") %>% add_markers(x = location[1], 
+    y = location[2], z = location[3], marker = list(color = "blue", 
+        size = 10, opacity = 1), name = "end point") %>% 
+    layout(legend = list(x = 100, y = 0.5)) %>% layout(annotations = list(x = 1, 
+    y = -0.1, text = "a = (.99)(1/6), B = 10^5, seed = 2000", 
+    showarrow = F, xref = "paper", yref = "paper", xanchor = "right", 
+    yanchor = "auto", xshift = 0, yshift = 0, font = list(size = 15, 
+        color = "black")))
+p
+## R version 3.4.1 (2017-06-30)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Other packages: animation 2.5, bindrcpp 0.2, plotly 4.7.1, mapproj
+## 1.2-5, rvest 0.3.2, xml2 1.1.1, ggmap 2.6.1, ggplot2 2.2.1, maps
+## 3.2.0</code></pre></div>
+	<script src="js/Rplot.js"></script>
+<!-- highlight R code -->
+
+</body>
+</html>
