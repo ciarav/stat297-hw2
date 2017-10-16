@@ -1,0 +1,28 @@
+---
+title: "omega filter"
+author: "Mark Hancharik"
+date: "10/16/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+ptm1 <- proc.time()
+
+omega_values  <- read.table("omega_values.txt", header=F)
+paired_stocks  <- read.table("paired_choices.txt", header=F)
+cleaned_numbers <- read.table("cleaned_numbers.txt", header=F)
+
+stock_name1 <- as.character(paired_stocks[which.min((cleaned_numbers[,2])),1])
+stock_name2 <- as.character(paired_stocks[which.min((cleaned_numbers[,2])),2])
+amount1 <- omega_values[which.min((cleaned_numbers[,2])),]
+amount2 <- 1 - amount1
+
+cat("Our client should invest",amount1*10^6,"in",stock_name1,"and", amount2*10^6,"in",stock_name2)
+
+proc.time() - ptm1
+```

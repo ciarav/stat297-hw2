@@ -58,26 +58,40 @@ tail(results, n=num)
 
 
 ```{r,  echo=FALSE, message=FALSE}
+
+
+
 library(maps)
 library(ggmap)
-library(ggplot2)
+library(rvest)
+library(mapproj)
 
+
+# To save time and ensure a consistent data set, we have the complete list on a file 
 uni_coord <- read.table("uni_coord.txt")
-all_states <- map_data("state")
-#plot all states with ggplot
-p <- ggplot()
-states <- subset(all_states, region %in% c( "illinois", "indiana", "iowa","kansas", 'maryland', "michigan", "minnesota","missouri",'nebraska','new jersey', "pennsylvania", "ohio", "south dakota", "wisconsin",'west virginia') )
+colnames(uni_coord) <- c("lat","lon","wp","Division")
 
-p <- ggplot()
-p <- p + geom_polygon( data=states, aes(x=long, y=lat, group = group),colour="black", fill="grey" )
-p
 
-p<- p + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) + xlab("Longitude") + ylab("Latitude")
-p
+# because the lat, lon, and divisions won't change very often,
+# we alter the original code to only update the win percentages
 
-#central_map <- get_map(location = 'Indiana', zoom = 5, maptype = "toner")
-#ggmap(central_map) + geom_point(data = uni_coord, aes(V1, V2 ,col = V4), size= 3) +  #xlab("Longitude") + ylab("Latitude")
+# Define webpage
+big10 = read_html("http://www.bigten.org/library/stats/fb-confsked.html#standings")
 
+# Get win rate
+big10 %>% 
+    html_nodes("td:nth-child(7)") %>%
+    html_text() -> uni_wp
+uni_coord$wp = 100*as.numeric(uni_wp[1:14])
+
+title_label <- paste("Big 10 Conference - as of", Sys.Date())
+
+
+map <- get_map(location = 'Indiana', zoom = 5 )
+ggmap(map) + geom_point(data = uni_coord, 
+             aes(lat,lon ,col = Division, size = wp)) + 
+             scale_size(name="Win rate [%]") + 
+             xlab("Longitude") + ylab("Latitude") + ggtitle(title_label)
 
 
 
@@ -89,8 +103,8 @@ p
 
 ## 3D-random walks
 
-### a = (1/6), B = 10^4, seed = 1982
 ``` {r, echo=FALSE, message=FALSE}
+
 
 #a = (1/6), B = 10^4, seed = 1982:
 
@@ -213,7 +227,7 @@ p
 
 ```
 
-### a = (.99)(1/6), B = 10^5, seed = 2000
+
 ```{r, echo=FALSE, message=FALSE}
 # a = (.99)(1/6), B = 10^5, seed = 2000:
 
@@ -310,8 +324,7 @@ p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d',
       font=list(size=15, color="black"))
  )
 p
-animation_opts(p, frame = 500, transition = 500, easing = "linear",
-               redraw = TRUE, mode = "immediate")
+#animation_opts(p, frame = 500, transition = 500, easing = "linear", redraw = TRUE, mode = "immediate")
 #p <- plot_ly(as.data.frame(path), x = ~x1, y = ~y1, z = ~z1, type = 'scatter3d', mode = 'lines', line = list(color = '#1f77b4', width = 1)) 
 #p
 # print out the expected value
@@ -322,27 +335,53 @@ animation_opts(p, frame = 500, transition = 500, easing = "linear",
 ## Construct a portfolio
 
 
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-choices <- read.table("paired_choices.txt", header=F)
 
-calculated_values <- read.table("calculated_values.txt", header=F)
+omega_values  <- read.table("omega_values.txt", header=F)
+paired_stocks  <- read.table("paired_choices.txt", header=F)
+cleaned_numbers <- read.table("cleaned_numbers.txt", header=F)
 
-cat("The minimum variance portfolio is",as.matrix(choices[which.min(calculated_values[, 1]), ]))
+stock_name1 <- as.character(paired_stocks[which.min((cleaned_numbers[,2])),1])
+stock_name2 <- as.character(paired_stocks[which.min((cleaned_numbers[,2])),2])
+amount1 <- omega_values[which.min((cleaned_numbers[,2])),]
+amount2 <- 1 - amount1
 
-v1 <- calculated_values[which.min(calculated_values[, 1]),1]
-m1 <- calculated_values[which.min(calculated_values[, 1]),2]
+cat("Our client should invest",amount1*10^6,"in",stock_name1,"and", amount2*10^6,"in",stock_name2)
 
 
-library(plotly)
 
-p <- plot_ly(data = as.data.frame(calculated_values), type = "scatter", x = ~calculated_values[, 1], y = ~calculated_values[, 2], alpha = .2,  name = 'possible portfolio') %>%
-  layout(title = "average variance and mean returns") %>%
-  add_markers(x = ~v1, y = ~m1,  marker=list(color="red" , size=10 , opacity=1.0), name = 'minimum variance portfolio')
-p
+
+
+
+
+
+#choices <- read.table("paired_choices.txt", header=F)
+
+#calculated_values <- read.table("calculated_values.txt", header=F)
+
+#colnames(calculated_values) <- c("Investment Daily Risk", "Investment Daily Expected Returns")
+
+
+
+#v1 <- calculated_values[which.min(calculated_values[, 1]),1]
+#m1 <- calculated_values[which.min(calculated_values[, 1]),2]
+
+
+#library(plotly)
+
+#x <- list(title = "Investment Daily Risk")
+#y <- list(title =  "Investment Daily Expected Returns")
+
+# this is turned off, as it loads 100k active javascript objects, slowing down page load
+#  we have included a PNG of the output
+
+#p <- plot_ly(data = as.data.frame(calculated_values), type = "scatter", x = ~calculated_values[, 1], y = ~calculated_values[, 2], alpha = .2,  name = 'possible portfolio') %>%
+#  layout(title = "average variance and mean returns", xaxis = x, yaxis = y) %>%
+ # add_markers(x = ~v1, y = ~m1,  marker=list(color="red" , size=10 , opacity=1.0), name = 'minimum variance portfolio')
+
+#p
 
 ```
 
-
-
+![minimum variance portfolo picture ](portfolio.png)

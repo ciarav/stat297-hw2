@@ -1,0 +1,44 @@
+---
+title: "omega filter"
+author: "Mark Hancharik"
+date: "10/16/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+ptm1 <- proc.time()
+
+zero_counter <- 0
+over_limit_counter <- 0
+filter <- 0.60 # w value for the stock, .6 is our limit, as (.61 + (min = .4) = 1.01)
+
+omega_values  <- read.table("omega_values.txt", header=F)
+calculations <- read.table("proper_calculations.txt", header=F)
+
+calculations[1,]
+calculations[1,1]
+calculations[1,2]
+for(i in 1:length(calculations[,1])){ 
+  if(omega_values[i,1]==0){
+    zero_counter = zero_counter + 1
+    calculations[i,1] = NaN
+    calculations[i,2] = NaN
+  }
+  if(omega_values[i,1] > filter){
+    over_limit_counter = over_limit_counter + 1
+    calculations[i,1] = NaN
+    calculations[i,2] = NaN
+  }
+}
+#plot(calculations)
+#head(calculations, n=100)
+write.table(calculations, file="cleaned_numbers.txt", row.names=FALSE, col.names=FALSE)
+cat(zero_counter," were at zero,",over_limit_counter,"were over the limit of", filter*100,"%")
+plot(calculations)
+proc.time() - ptm1
+```
